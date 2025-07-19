@@ -1,0 +1,22 @@
+<h1 style="color: #2b9348;">しまバス チャットボット</h1>
+
+<div style="border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: auto; background-color: #f5f5f5; margin-bottom: 20px;">
+  <% if @messages.present? %>
+    <% @messages.each do |msg| %>
+      <div style="margin: 10px 0; text-align: <%= msg["user"] == "User" ? "right" : "left" %>;">
+        <span style="display: inline-block; padding: 10px; border-radius: 15px; max-width: 60%; background-color: <%= msg["user"] == "User" ? "#dcf8c6" : "#ffffff" %>;">
+          <strong><%= msg["user"] %>:</strong><br>
+          <%= msg["content"] %>
+        </span>
+      </div>
+    <% end %>
+  <% else %>
+    <p>会話履歴はありません。</p>
+  <% end %>
+</div>
+
+<%= form_with url: "/chat", method: :post, local: true do |form| %>
+  <%= form.label :question, "質問してください：" %><br>
+  <%= form.text_field :question, size: 50 %>
+  <%= form.submit "送信", class: "btn" %>
+<% end %>
